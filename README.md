@@ -19,8 +19,28 @@ A call is started using the function startCall, as in the example below :
 
 ```javascript
 
-dheeApi.startCall('HINDI');
+dheeVoiceClient.startCall('HINDI');
 
 ```
 
-Supported languages are : ENGLISH, HINDI, BANGLA, TAMIL, TELUGU, KANNADA, MARATHI, GUJARATI, MALAYALAM
+**Supported languages are : ENGLISH, HINDI, BANGLA, TAMIL, TELUGU, KANNADA, MARATHI, GUJARATI, MALAYALAM**
+
+Event handlers can be set as below :
+```javascript
+            dheeVoiceClient.setEventHandler('connected', function () {
+                statusDiv.innerHTML = "Connected";
+
+            });
+
+```
+**Events supported are connected, disconnected and error**.
+
+In case you the call is happening on speaker phones (Public Address System cases), you might want to stop listening when the user doen't intent to speak, for better experience (by avoiding echo). Two functions helpful here are: 
+
+```javascript
+            dheeVoiceClient.stopListening();
+            dheeVoiceClient.startListening();
+
+```
+
+Issue reports, fix/extention PRs are welcome!
