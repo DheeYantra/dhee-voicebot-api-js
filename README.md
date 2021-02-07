@@ -2,7 +2,7 @@
 
 The javascript API for initiating voice calls with agents deployed in Dhee.AI cloud.
 
-Download the JS file dhee-voice-api.js and include it in your server scripts.
+Download the JS file dhee-voice-api.js from the **downloads** folder and include it in your server's scripts.
 
 Add the script then to the HTML page where you would want your users to have voice conversations.
 
