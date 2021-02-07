@@ -31,13 +31,15 @@
     <script src="dhee-voice-api.js"></script>
     <script>
         window.onload = function () {
-            var dheeApi = new DheeVoiceApi("24284276bc2949a98cce812cc111f33f", "ed3873d5d98747f888621bf96992c727");
+
             var statusDiv = document.getElementById("statusDiv");
             var callButton = document.getElementById("callButton");
             var disconnectButton = document.getElementById("disconnectButton");
-
             disconnectButton.style.display = "none";
 
+            
+            var dheeApi = new DheeVoiceApi("your-api-key", "your-api-secret");
+            
             callButton.onclick = function () {
                 dheeApi.startCall('HINDI');
                 callButton.style.display = "none";

@@ -325,31 +325,6 @@ function DheeVoiceApi(apiKey, apiSecret) {
             xhr.open("POST", callCreationUrl, true);
             xhr.setRequestHeader('Content-Type', 'application/json');
             xhr.send(JSON.stringify(config));
-
-            /*$.ajax({
-                url: callCreationUrl,
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: JSON.stringify(config),
-                success: function (res) {
-                    if (res.success === true) {
-                        callId = res.result;
-                        console.log("Got callId :" + callId);
-                        DheeVoiceBotApi.newWebsocket(callId);
-                    } else {
-                        DheeVoiceBotApi.onError(res.result);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    
-                    console.error("Error while getting voice call key" + error);
-                    DheeVoiceBotApi.onError("Error while getting voice call key" + error);
-                }
-            })*/
-
-            //socket.send(JSON.stringify(config));
         }
         initiateVoiceCall();
     }
