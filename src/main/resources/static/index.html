@@ -1,0 +1,72 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: #303638;
+            font-family: Arial, Helvetica, sans-serif;
+            color: azure;
+            text-align: center;
+            font-size: larger;
+        }
+
+        button {
+            height: 42px;
+            border-radius: 10px;
+            font-size: 20px;
+            background-color: lightseagreen;
+            margin: 3px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Dhee Voice Api Demo</h1>
+    <button title="Call Dhee" id="callButton">Call Dhee</button>
+    <button title="Disconnect" id="disconnectButton">Disconnect</button>
+    <div id="statusDiv">Click on the Call Dhee Button to make a call.</div>
+
+
+    <script src="dhee-voice-api.js"></script>
+    <script>
+        window.onload = function () {
+            var dheeApi = new DheeVoiceApi("24284276bc2949a98cce812cc111f33f", "ed3873d5d98747f888621bf96992c727");
+            var statusDiv = document.getElementById("statusDiv");
+            var callButton = document.getElementById("callButton");
+            var disconnectButton = document.getElementById("disconnectButton");
+
+            disconnectButton.style.display = "none";
+
+            callButton.onclick = function () {
+                dheeApi.startCall('HINDI');
+                callButton.style.display = "none";
+                disconnectButton.style.display = "inline-block";
+            }
+
+            disconnectButton.onclick = function() {
+               dheeApi.disconnect();
+            }
+
+            dheeApi.setEventHandler('connected', function () {
+                statusDiv.innerHTML = "Connected";
+
+            });
+            dheeApi.setEventHandler('disconnected', function () {
+                statusDiv.innerHTML = "Disconnected";
+                disconnectButton.style.display = "none";
+                callButton.style.display = "inline-block";
+
+            });
+
+            dheeApi.setEventHandler('error', function (error) {
+                statusDiv.innerHTML = "Error occured : " + error;
+                callButton.style.display = "inline-block";
+            });
+
+
+        }
+    </script>
+</body>
+
+</html>
