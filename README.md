@@ -33,7 +33,7 @@ Event handlers can be set as below :
             });
 
 ```
-**Events supported are connected, disconnected and error**.
+**Events supported are connected, disconnected, utteranceCompleted and error**.
 
 In case the call is happening on loud speakers (Public Address System cases), you might want to stop listening when the user doesn't intent to speak. This is for better call experience by avoiding echo from spoken speech. The below two functions are helpful here: 
 
