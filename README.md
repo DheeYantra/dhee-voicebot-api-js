@@ -43,4 +43,10 @@ In case the call is happening on loud speakers (Public Address System cases), yo
 
 ```
 
+After the call, the bot disconnects the call. Of course at any point of conversation, the user can disconnect the call. To facilitate this, use this function -
+```javascript
+            dheeVoiceClient.disconnect()
+```
+
+
 Issue reports, fix/extention PRs are welcome!
