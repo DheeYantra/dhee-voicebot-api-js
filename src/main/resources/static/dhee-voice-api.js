@@ -18,13 +18,17 @@ function DheeVoiceApi(apiKey, apiSecret) {
     this.onUtteranceCompleted = function() {
         console.log("UC");
     }
+    this.onUtteranceStart = function() {
+        console.log("US");
+    }
 
     this.setEventHandler = function (event, handler) {
         switch (event) {
             case "connected": this.onConnect = handler; break;
             case "disconnected": this.onDisconnect = handler; break;
             case "error": this.onError = handler; break;
-            case "utteranceCompleted" : this.onUtteranceCompleted = handler;
+            case "utteranceCompleted" : this.onUtteranceCompleted = handler; break;
+            case "utteranceStart" : this.onUtteranceStart = handler;
         }
     }
 
@@ -79,7 +83,9 @@ function DheeVoiceApi(apiKey, apiSecret) {
                     socket.onmessage = function (event) {
                         console.debug("WebSocket message received:", event);
                     };
+
                     return socket;
+
                 });
 
                 Promise.all([audioPromise, websocketPromise]).then(function (values) {
@@ -157,10 +163,10 @@ function DheeVoiceApi(apiKey, apiSecret) {
                                     var playableBuffer = copyArrayBuffer(completedAudioBuffers[playableAudioId].buffer);
                                     delete completedAudioBuffers[playableAudioId];
                                     playCompleteAudio(playableBuffer);
-                                    setTimeout(function() {
+                                    /*setTimeout(function() {
                                         console.log("utterenace completed.");
                                         DheeVoiceBotApi.onUtteranceCompleted();
-                                    }, 5000)
+                                    }, 2000)*/
                                     
                                 }, 100)
 
@@ -204,6 +210,7 @@ function DheeVoiceApi(apiKey, apiSecret) {
 
                     function playCompleteAudio(arrayBuffer) {
                         try {
+                            DheeVoiceBotApi.onUtteranceStart();
                             console.log('decoding into audio buffer bytes of length ' + arrayBuffer.byteLength);
                             audioContext.decodeAudioData(arrayBuffer, function (soundBuffer) {
                                 playBuffer(soundBuffer, audioContext);
@@ -235,7 +242,10 @@ function DheeVoiceApi(apiKey, apiSecret) {
                         lastStartTime = startTime;
                         lastAudioBufferSource = source;
                         console.log("adjusted start time = " + startTime);
-
+                        source.onended = function() {
+                            console.log("utterance ended.")
+                            DheeVoiceBotApi.onUtteranceCompleted();
+                        }
                         source.start(startTime);
 
                     }
@@ -342,3 +352,4 @@ function DheeVoiceApi(apiKey, apiSecret) {
 
     return this;
 }
+export default DheeVoiceApi
