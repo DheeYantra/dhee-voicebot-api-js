@@ -15,12 +15,16 @@ function DheeVoiceApi(apiKey, apiSecret) {
     this.onDisconnect = function () {
         console.log("Disconnected.");
     }
+    this.onUtteranceCompleted = function() {
+        console.log("UC");
+    }
 
     this.setEventHandler = function (event, handler) {
         switch (event) {
             case "connected": this.onConnect = handler; break;
             case "disconnected": this.onDisconnect = handler; break;
-            case "error": this.onError = handler;
+            case "error": this.onError = handler; break;
+            case "utteranceCompleted" : this.onUtteranceCompleted = handler;
         }
     }
 
@@ -155,6 +159,11 @@ function DheeVoiceApi(apiKey, apiSecret) {
                                     var playableBuffer = copyArrayBuffer(completedAudioBuffers[playableAudioId].buffer);
                                     delete completedAudioBuffers[playableAudioId];
                                     playCompleteAudio(playableBuffer);
+                                    setTimeout(function() {
+                                        console.log("utterenace completed.");
+                                        DheeVoiceBotApi.onUtteranceCompleted();
+                                    }, 5000)
+                                    
                                 }, 100)
 
                             } else {
