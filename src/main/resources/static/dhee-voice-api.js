@@ -79,9 +79,7 @@ function DheeVoiceApi(apiKey, apiSecret) {
                     socket.onmessage = function (event) {
                         console.debug("WebSocket message received:", event);
                     };
-
                     return socket;
-
                 });
 
                 Promise.all([audioPromise, websocketPromise]).then(function (values) {
